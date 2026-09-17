@@ -1,0 +1,132 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-09-15T21:45:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2023.5.8",
+  "resources": [
+    {
+      "_id": "req_listar",
+      "parentId": "col_catalogo",
+      "modified": 1694814300000,
+      "created": 1694814300000,
+      "url": "{{base_url}}/api/caminhoes",
+      "name": "Listar caminhões",
+      "description": "Lista todos os caminhões do catálogo. Pode filtrar por status e marca via query string.",
+      "method": "GET",
+      "parameters": [
+        {
+          "name": "status",
+          "value": "",
+          "description": "Filtra por status (disponivel, vendido, reservado, em_negociacao)",
+          "disabled": true
+        },
+        {
+          "name": "marca",
+          "value": "",
+          "description": "Filtra por marca (busca parcial)",
+          "disabled": true
+        }
+      ],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ]
+    },
+    {
+      "_id": "req_buscar",
+      "parentId": "col_catalogo",
+      "modified": 1694814300000,
+      "created": 1694814300000,
+      "url": "{{base_url}}/api/caminhoes/1",
+      "name": "Buscar caminhão por ID",
+      "description": "Retorna um caminhão específico pelo ID.",
+      "method": "GET",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ]
+    },
+    {
+      "_id": "req_criar",
+      "parentId": "col_catalogo",
+      "modified": 1694814300000,
+      "created": 1694814300000,
+      "url": "{{base_url}}/api/caminhoes",
+      "name": "Cadastrar caminhão",
+      "description": "Cria um novo caminhão no catálogo.",
+      "method": "POST",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"marca\": \"Volvo\",\n  \"modelo\": \"FH 540\",\n  \"ano\": 2023,\n  \"tipo\": \"trator\",\n  \"cor\": \"Branco\",\n  \"placa\": \"ABC1D23\",\n  \"chassi\": \"9BVHS30X0PC123456\",\n  \"quilometragem\": 0,\n  \"valor\": 650000.00,\n  \"status\": \"disponivel\",\n  \"observacoes\": \"Caminhão zero km, garantia de fábrica\"\n}"
+      }
+    },
+    {
+      "_id": "req_atualizar",
+      "parentId": "col_catalogo",
+      "modified": 1694814300000,
+      "created": 1694814300000,
+      "url": "{{base_url}}/api/caminhoes/1",
+      "name": "Atualizar caminhão",
+      "description": "Atualiza parcialmente um caminhão existente (PUT).",
+      "method": "PUT",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"status\": \"vendido\",\n  \"valor\": 630000.00,\n  \"observacoes\": \"Vendido para transportadora XYZ\"\n}"
+      }
+    },
+    {
+      "_id": "req_excluir",
+      "parentId": "col_catalogo",
+      "modified": 1694814300000,
+      "created": 1694814300000,
+      "url": "{{base_url}}/api/caminhoes/1",
+      "name": "Excluir caminhão",
+      "description": "Remove um caminhão do catálogo.",
+      "method": "DELETE",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ]
+    }
+  ],
+  "variables": [
+    {
+      "name": "base_url",
+      "value": "http://localhost:8000",
+      "description": "URL base da API (ajuste para Herd se necessário)"
+    }
+  ],
+  "collections": [
+    {
+      "_id": "col_catalogo",
+      "name": "Catálogo de Caminhões",
+      "description": "Coleção de testes para a API Catálogo de Caminhões"
+    }
+  ]
+}

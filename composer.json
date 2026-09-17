@@ -1,0 +1,15 @@
+{
+    "name": "academico/catalogo-caminhoes",
+    "description": "Catálogo de Caminhões - API REST para gerenciamento de caminhões em uma concessionária. Projeto acadêmico em PHP puro.",
+    "type": "project",
+    "require": {
+        "php": ">=8.3"
+    },
+    "require-dev": {
+        "zircote/swagger-php": "^4.9"
+    },
+    "autoload": {
+        "classmap": ["Swagger/"]
+    },
+    "license": "MIT"
+}

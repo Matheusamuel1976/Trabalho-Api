@@ -1,0 +1,338 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Catálogo de Caminhões",
+        "description": "API REST para gerenciamento de catálogo de caminhões em uma concessionária.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/caminhoes": {
+            "get": {
+                "summary": "Lista todos os caminhões do catálogo",
+                "operationId": "listarCaminhoes",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filtra os caminhões por status",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "disponivel",
+                                "vendido",
+                                "reservado",
+                                "em_negociacao"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "marca",
+                        "in": "query",
+                        "description": "Filtra os caminhões por marca (busca parcial)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de caminhões",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Caminhao"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Cadastra um novo caminhão no catálogo",
+                "operationId": "criarCaminhao",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CaminhaoEntrada"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Caminhão criado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Caminhao"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Dados inválidos"
+                    }
+                }
+            }
+        },
+        "/api/caminhoes/{id}": {
+            "get": {
+                "summary": "Busca um caminhão pelo ID",
+                "operationId": "buscarCaminhao",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Caminhão encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Caminhao"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Caminhão não encontrado"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Atualiza um caminhão existente",
+                "operationId": "atualizarCaminhao",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CaminhaoEntrada"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Caminhão atualizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Caminhao"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Caminhão não encontrado"
+                    },
+                    "422": {
+                        "description": "Dados inválidos"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Exclui um caminhão do catálogo",
+                "operationId": "excluirCaminhao",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Caminhão excluído"
+                    },
+                    "404": {
+                        "description": "Caminhão não encontrado"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Caminhao": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "marca": {
+                        "type": "string",
+                        "example": "Volvo"
+                    },
+                    "modelo": {
+                        "type": "string",
+                        "example": "FH 540"
+                    },
+                    "ano": {
+                        "type": "integer",
+                        "example": 2023
+                    },
+                    "tipo": {
+                        "type": "string",
+                        "enum": [
+                            "trator",
+                            "rigido",
+                            "basculante",
+                            "cegonha",
+                            "tanque",
+                            "bau",
+                            "outro"
+                        ],
+                        "example": "trator"
+                    },
+                    "cor": {
+                        "type": "string",
+                        "example": "Branco"
+                    },
+                    "placa": {
+                        "type": "string",
+                        "example": "ABC1D23"
+                    },
+                    "chassi": {
+                        "type": "string",
+                        "example": "9BVHS30X0PC123456"
+                    },
+                    "quilometragem": {
+                        "type": "integer",
+                        "example": 0
+                    },
+                    "valor": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 650000
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "disponivel",
+                            "vendido",
+                            "reservado",
+                            "em_negociacao"
+                        ],
+                        "example": "disponivel"
+                    },
+                    "observacoes": {
+                        "type": "string",
+                        "example": "Caminhão zero km, garantia de fábrica",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "CaminhaoEntrada": {
+                "required": [
+                    "marca",
+                    "modelo",
+                    "ano",
+                    "tipo",
+                    "cor",
+                    "placa",
+                    "chassi",
+                    "valor"
+                ],
+                "properties": {
+                    "marca": {
+                        "type": "string",
+                        "example": "Volvo"
+                    },
+                    "modelo": {
+                        "type": "string",
+                        "example": "FH 540"
+                    },
+                    "ano": {
+                        "type": "integer",
+                        "example": 2023
+                    },
+                    "tipo": {
+                        "type": "string",
+                        "enum": [
+                            "trator",
+                            "rigido",
+                            "basculante",
+                            "cegonha",
+                            "tanque",
+                            "bau",
+                            "outro"
+                        ],
+                        "example": "trator"
+                    },
+                    "cor": {
+                        "type": "string",
+                        "example": "Branco"
+                    },
+                    "placa": {
+                        "type": "string",
+                        "example": "ABC1D23"
+                    },
+                    "chassi": {
+                        "type": "string",
+                        "example": "9BVHS30X0PC123456"
+                    },
+                    "quilometragem": {
+                        "type": "integer",
+                        "example": 0
+                    },
+                    "valor": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 650000
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "disponivel",
+                            "vendido",
+                            "reservado",
+                            "em_negociacao"
+                        ],
+                        "example": "disponivel"
+                    },
+                    "observacoes": {
+                        "type": "string",
+                        "example": "Caminhão zero km, garantia de fábrica"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
